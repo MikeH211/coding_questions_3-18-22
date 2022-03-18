@@ -13,52 +13,50 @@ class Llist {
         this.head = null;
         this.tail = null;
     }
-    addNode(content:any){
-        let node:Lnode = new Lnode(content);
-        let pointedNode: Lnode | null = null;
-        if(this.head === null){
+
+
+    
+    addNode(content:any,node:Lnode | null = null){
+        node ??= new Lnode(content);
+        if(this.head === null || this.tail === null){
             this.head = node;
             this.tail = node;
-            node.pointer = null;
         }else{
-            pointedNode = this.head;
-            while(node.pointer != null){
-                node = node.pointer;
-            }
-            node.pointer = node;
+            this.tail.pointer = node;
+            this.tail = node;
         }
     }
 }
 function findIntersection(x:Llist, y:Llist){
-    let xNode:Lnode | null = x.head;
-    let yNode:Lnode | null = y.head;
-    let intersectionPoint: string = "";
-    while(xNode != null && yNode != null){
-        if(xNode.content === yNode.content){
-            intersectionPoint = xNode.content.toString();
+    let intersectionPoint:any = null;
+    let currentNodex:Lnode | null = x.head;
+    let currentNodey:Lnode | null = y.head;
+    while(currentNodex !== null && currentNodey !== null){
+        if(currentNodex === currentNodey){
+            intersectionPoint = currentNodex;
             break;
         }
-        xNode = xNode.pointer;
-        yNode = yNode.pointer;
+        currentNodex = currentNodex.pointer;
+        currentNodey = currentNodey.pointer;
     }
-    if (intersectionPoint !== ""){
-        console.log("The lists intersect at " + intersectionPoint);
-    }else{
-        console.log("did not intersect");
-    }}
+    return intersectionPoint;
+}
+    
+const intersectNode = new Lnode(5)   
 const firstList: Llist = new Llist();
 firstList.addNode(66);
 firstList.addNode(88);
+firstList.addNode(0,intersectNode)
 firstList.addNode(22);
 firstList.addNode(8);
 firstList.addNode("hello");
 const secondList: Llist = new Llist();
 secondList.addNode("typescript");
 secondList.addNode(22);
+secondList.addNode(0,intersectNode);
 secondList.addNode(101);
 secondList.addNode("javascript");
 secondList.addNode(2);
-console.log(firstList);
-console.log(secondList)
 
-findIntersection(firstList,secondList);
+
+console.log(findIntersection(firstList,secondList)?.content);
