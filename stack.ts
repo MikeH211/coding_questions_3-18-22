@@ -9,7 +9,7 @@ function pop(){
     if(stack.length>0){
         return stack[stack.length-1];
     }else{
-        console.log("Error no values in stack")
+        throw new Error("Error no values in stack")
     }
     
 }
@@ -17,7 +17,7 @@ function max(){
     if(stack.length>0){
         return (Math.max(...stack))
     }else{
-        console.log("Error no values in stack")
+        throw new Error("Error no values in stack")
     }
 }
 pushToStack(6)
